@@ -6,6 +6,7 @@ import { Icons } from "@/components/ui/Icons/Icons";
 import { cn } from "@/lib/utils";
 import { FC } from "react";
 import { signIn } from "next-auth/react";
+import { ToastService } from "@/Services/toast.service";
 interface IAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const AuthForm: FC<IAuthFormProps> = ({ className, ...props }) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -15,7 +16,10 @@ const AuthForm: FC<IAuthFormProps> = ({ className, ...props }) => {
     try {
       await signIn("google");
     } catch (error) {
-      alert("djosjosjd");
+      ToastService.showErrorToast({
+        title: "Error",
+        message: "There was an error logging in with Google",
+      });
     } finally {
       setIsLoading(false);
     }
